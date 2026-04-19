@@ -228,7 +228,7 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
             {/* Cinematic Post Processing */}
             {/* @ts-ignore */}
             {typeof window !== 'undefined' && (
-              <EffectComposer disableNormalPass>
+              <EffectComposer enableNormalPass={false}>
                 <Bloom luminanceThreshold={0.1} luminanceSmoothing={0.9} intensity={2.0} mipmapBlur />
                 <ChromaticAberration blendFunction={BlendFunction.NORMAL} offset={new THREE.Vector2(0.002, 0.002)} />
               </EffectComposer>

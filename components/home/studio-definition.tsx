@@ -15,6 +15,7 @@ export function StudioDefinition() {
 
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.6, 1], [0, 1, 1, 0]);
   const y = useTransform(scrollYProgress, [0, 0.3], [100, 0]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
   const isInView = useInView(textRef, { once: true, margin: "-100px" });
 
@@ -22,28 +23,43 @@ export function StudioDefinition() {
   const words = text.split(" ");
 
   return (
-    <section ref={containerRef} className="w-full min-h-[80vh] flex items-center justify-center py-32 px-6 bg-transparent relative z-10 w-full pointer-events-auto">
-      <div className="absolute inset-0 bg-void/50 backdrop-blur-sm pointer-events-none" />
+    <section ref={containerRef} className="w-full min-h-[100vh] flex items-center justify-center py-40 px-6 bg-transparent relative z-10 pointer-events-auto overflow-hidden">
+      <motion.div 
+        style={{ y: backgroundY }}
+        className="absolute inset-0 bg-void/50 backdrop-blur-sm pointer-events-none z-0"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(157,0,255,0.05),transparent_50%),radial-gradient(circle_at_80%_70%,rgba(0,255,204,0.05),transparent_50%)]" />
+      </motion.div>
 
       <div className="max-w-5xl mx-auto flex flex-col gap-12 relative z-10 w-full">
         <motion.div 
           style={{ opacity, y }}
-          className="flex flex-col gap-2"
+          className="flex flex-col gap-6"
         >
-           <span className="font-mono text-[11px] text-lusion-purple uppercase tracking-[0.2em] mb-4 block">
-             [ WHO WE ARE ]
-           </span>
+           <motion.span 
+             initial={{ opacity: 0, x: -20 }}
+             whileInView={{ opacity: 1, x: 0 }}
+             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+             className="font-mono text-[11px] text-lusion-purple uppercase tracking-[0.4em] mb-2 block"
+           >
+             [ VISUAL INTELLIGENCE & ENGINEERING ]
+           </motion.span>
            
-           <h3 ref={textRef} className="font-sans text-3xl md:text-5xl lg:text-[60px] font-medium leading-[1.2] tracking-tight text-titanium">
+           <h3 ref={textRef} className="font-sans text-4xl md:text-6xl lg:text-[72px] font-medium leading-[1.1] tracking-tight text-titanium max-w-4xl">
             {words.map((word, i) => (
               <motion.span
                 key={i}
-                initial={{ opacity: 0, filter: 'blur(10px)', y: 20 }}
-                animate={isInView ? { opacity: 1, filter: 'blur(0px)', y: 0 } : {}}
-                transition={{ duration: 0.8, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, filter: 'blur(10px)', y: 40 }}
+                whileInView={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+                viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+                transition={{ 
+                  duration: 1.2, 
+                  delay: i * 0.03, // Tighter stagger
+                  ease: [0.16, 1, 0.3, 1] 
+                }}
                 className={cn(
-                  "inline-block mr-[0.3em]",
-                  word.includes("interactive") || word.includes("digital") ? "text-lusion-cyan drop-shadow-[0_0_15px_rgba(0,255,204,0.3)]" : "text-titanium/80",
+                  "inline-block mr-[0.25em] py-1",
+                  word.includes("interactive") || word.includes("digital") ? "text-lusion-cyan drop-shadow-[0_0_15px_rgba(0,255,204,0.3)]" : "text-titanium/85",
                   word.includes("remember.") ? "text-lusion-purple drop-shadow-[0_0_20px_rgba(157,0,255,0.4)]" : ""
                 )}
               >

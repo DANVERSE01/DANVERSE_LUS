@@ -1,5 +1,6 @@
 'use client';
 
+// Trigger manifest refresh
 import { useState } from 'react';
 import { Hero } from '@/components/home/hero';
 import { StudioDefinition } from '@/components/home/studio-definition';
